@@ -1,25 +1,6 @@
 include config.mk
 
-ifeq ($(CRYPTO_OPTIONS),AES128C)
- SRC += aes-independant.c
-
- #######
- #*This is the recommended first version to test* 
- SRC += aes.c
- CDEFS += -DMBEDTLS -DMBEDTLS_SHA1_C
- 
- ifeq ($(MBEDTLS_AES_ROM_TABLES),)
- else
- CDEFS += -DMBEDTLS_AES_ROM_TABLES=$(MBEDTLS_AES_ROM_TABLES)
- endif
-    
-else ifeq ($(CRYPTO_OPTIONS),SHA1)
- SRC += sha1.c
- CDEFS += -DMBEDTLS -DMBEDTLS_SHA
-    
-else
- $(error: Unknown or blank CRYPTO_OPTIONS: $(CRYPTO_OPTIONS). CRYPTO_OPTIONS is required for this CRYPTO_TARGET)
-endif #AVRCRYPTOLIB
+CFLAGS += -DMBEDTLS -DMBEDTLS_SHA1_C -DMBEDTLS -DMBEDTLS_SHA
 
 all:
 	$(MAKE) -C library ipe

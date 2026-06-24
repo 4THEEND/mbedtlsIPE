@@ -170,7 +170,7 @@ libmbedipe.a : $(OBJS_IPE)
 	echo "  RL    $@"
 	$(AR) -s $@
 
-.c.o:
+%.o: %.c
 	echo "  CC    $<"
 	$(CC) $(LOCAL_CFLAGS) $(CFLAGS) $(INCLUDE) -c $< -o $@
 
