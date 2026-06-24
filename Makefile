@@ -1,3 +1,5 @@
+include config.mk
+
 CRYPTO_LIB = mbedtls/
 
 VPATH += :$(FIRMWAREPATH)/crypto/$(CRYPTO_LIB)/library
@@ -29,4 +31,11 @@ else
  $(error: Unknown or blank CRYPTO_OPTIONS: $(CRYPTO_OPTIONS). CRYPTO_OPTIONS is required for this CRYPTO_TARGET)
 endif #AVRCRYPTOLIB
 
+all:
+	$(MAKE) -C lib
+endif
 
+clean:
+	$(MAKE) -C lib clean
+	$(MAKE) -C tests clean
+	$(RM) *~
