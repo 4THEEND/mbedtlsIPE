@@ -44,6 +44,11 @@ ifdef WINDOWS_BUILD
 DLEXT=dll
 endif
 
+OBJS_IPE= rsa.o bignum.o md.o \
+		md5.o md_wrap.o sha1.o \
+		sha256.o sha512.o ripemd160.o \
+		oid.o sha1.o aes.o
+
 OBJS_CRYPTO=	aes.o		aesni.o		arc4.o		\
 		asn1parse.o	asn1write.o	base64.o	\
 		bignum.o	blowfish.o	camellia.o	\
@@ -74,9 +79,11 @@ OBJS_TLS=	debug.o		net_sockets.o		\
 		ssl_srv.o	ssl_ticket.o		\
 		ssl_tls.o
 
+ipe: libmbedipe.a
+
 .SILENT:
 
-.PHONY: all static shared clean
+.PHONY: all static shared clean rsa
 
 ifndef SHARED
 all: static
@@ -157,9 +164,15 @@ libmbedcrypto.dll: $(OBJS_CRYPTO)
 	echo "  LD    $@"
 	$(CC) -shared -Wl,-soname,$@ -Wl,--out-implib,$@.a -o $@ $(OBJS_CRYPTO) -lws2_32 -lwinmm -lgdi32 -static-libgcc $(LOCAL_LDFLAGS) $(LDFLAGS)
 
+libmbedipe.a : $(OBJS_IPE)
+	echo "  AR    $@"
+	$(AR) -rc $@ $(OBJS_IPE)
+	echo "  RL    $@"
+	$(AR) -s $@
+
 .c.o:
 	echo "  CC    $<"
-	$(CC) $(LOCAL_CFLAGS) $(CFLAGS) -c $<
+	$(CC) $(LOCAL_CFLAGS) $(CFLAGS) $(INCLUDE) -c $< -o $@
 
 clean:
 ifndef WINDOWS

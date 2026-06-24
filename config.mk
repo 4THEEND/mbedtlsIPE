@@ -9,7 +9,6 @@ CFLAGS          = -Wall -std=gnu99 -g -mmcu=$(CPU) -mhwmult=none -D__$(CPU)__ -O
 
 
 vpath %.c ../lib/source/
-ENABLE_TESTS=false
 
 # override MinGW built-in recipe
 %.o: %.c

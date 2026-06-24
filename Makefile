@@ -1,10 +1,5 @@
 include config.mk
 
-CRYPTO_LIB = mbedtls/
-
-VPATH += :$(FIRMWAREPATH)/crypto/$(CRYPTO_LIB)/library
-EXTRAINCDIRS += $(FIRMWAREPATH)/crypto/$(CRYPTO_LIB)/include
-
 ifeq ($(CRYPTO_OPTIONS),AES128C)
  SRC += aes-independant.c
 
@@ -17,25 +12,18 @@ ifeq ($(CRYPTO_OPTIONS),AES128C)
  else
  CDEFS += -DMBEDTLS_AES_ROM_TABLES=$(MBEDTLS_AES_ROM_TABLES)
  endif
- 
-else ifeq ($(CRYPTO_OPTIONS),RSA)
- SRC += rsa.c bignum.c md.c md5.c md_wrap.c sha1.c sha256.c sha512.c ripemd160.c oid.c
- CDEFS += -DMBEDTLS -DMBEDTLS_SHA
     
 else ifeq ($(CRYPTO_OPTIONS),SHA1)
  SRC += sha1.c
  CDEFS += -DMBEDTLS -DMBEDTLS_SHA
     
 else
-
  $(error: Unknown or blank CRYPTO_OPTIONS: $(CRYPTO_OPTIONS). CRYPTO_OPTIONS is required for this CRYPTO_TARGET)
 endif #AVRCRYPTOLIB
 
 all:
-	$(MAKE) -C lib
-endif
+	$(MAKE) -C library ipe
 
 clean:
-	$(MAKE) -C lib clean
-	$(MAKE) -C tests clean
+	$(MAKE) -C library clean
 	$(RM) *~
