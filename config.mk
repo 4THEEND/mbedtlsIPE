@@ -5,7 +5,7 @@ AR				= msp430-elf-ar
 CPU             = MSP430F149
 
 INCLUDE         = -I$(OPENIPE)
-CFLAGS          = -Wall -std=gnu99 -g -mmcu=$(CPU) -mhwmult=none -D__$(CPU)__ -O2 -D_ISOC99_SOURCE -MMD -D__extension__=
+CFLAGS          = -Wall -std=gnu99 -g -mmcu=$(CPU) -mhwmult=none -D__$(CPU)__ -Os -D_ISOC99_SOURCE -MMD -D__extension__=
 
 
 vpath %.c ../include/library

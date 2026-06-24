@@ -47,7 +47,8 @@ endif
 OBJS_IPE= rsa.o bignum.o md.o \
 		md5.o md_wrap.o sha1.o \
 		sha256.o sha512.o ripemd160.o \
-		oid.o sha1.o aes.o
+		oid.o sha1.o aes.o \
+		asn1parse.o
 
 OBJS_CRYPTO=	aes.o		aesni.o		arc4.o		\
 		asn1parse.o	asn1write.o	base64.o	\
